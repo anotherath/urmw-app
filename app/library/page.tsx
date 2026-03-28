@@ -4,11 +4,46 @@ import MusicCard from "../components/MusicCard";
 
 export default function LibraryPage() {
   const yourMusic = [
-    { id: 4, title: "Blinding Lights", artist: "The Weeknd", cover: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200&h=200&auto=format&fit=crop" },
-    { id: 5, title: "Watermelon Sugar", artist: "Harry Styles", cover: "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=200&h=200&auto=format&fit=crop" },
-    { id: 6, title: "Say So", artist: "Doja Cat", cover: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=200&h=200&auto=format&fit=crop" },
-    { id: 7, title: "Good 4 U", artist: "Olivia Rodrigo", cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=200&h=200&auto=format&fit=crop" },
-    { id: 8, title: "Don't Start Now", artist: "Dua Lipa", cover: "https://images.unsplash.com/photo-1458560871784-56d23406c091?q=80&w=200&h=200&auto=format&fit=crop" },
+    {
+      id: 4,
+      title: "Blinding Lights",
+      artist: "The Weeknd",
+      duration: "3:20",
+      cover:
+        "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=200&h=200&auto=format&fit=crop",
+    },
+    {
+      id: 5,
+      title: "Watermelon Sugar",
+      artist: "Harry Styles",
+      duration: "2:54",
+      cover:
+        "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=200&h=200&auto=format&fit=crop",
+    },
+    {
+      id: 6,
+      title: "Say So",
+      artist: "Doja Cat",
+      duration: "3:57",
+      cover:
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=200&h=200&auto=format&fit=crop",
+    },
+    {
+      id: 7,
+      title: "Good 4 U",
+      artist: "Olivia Rodrigo",
+      duration: "2:58",
+      cover:
+        "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=200&h=200&auto=format&fit=crop",
+    },
+    {
+      id: 8,
+      title: "Don't Start Now",
+      artist: "Dua Lipa",
+      duration: "3:03",
+      cover:
+        "https://images.unsplash.com/photo-1458560871784-56d23406c091?q=80&w=200&h=200&auto=format&fit=crop",
+    },
   ];
 
   return (
