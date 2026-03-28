@@ -1,26 +1,54 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: #FF6B9E; /* Pink */
+  --color-primary-dark: #E65A8D;
+  --color-secondary: #FFB3D1; 
+  --color-background-start: #F1F5F9; /* Slate 100 */
+  --color-background-mid: #E2E8F0; /* Slate 200 */
+  --color-background-end: #CBD5E1; /* Slate 300 */
+  
+  --font-sans: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background-color: #ffffff;
+    color: #111827;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+
+  .glass {
+    background: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+  }
+
+  .glass-card {
+    background: #ffffff;
+    border: 1px solid #fce7f3;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+  }
+
+  .soft-shadow {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  }
+  
+  .neumorph {
+    background: #ffffff;
+    box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.8), 5px 5px 15px rgba(0, 0, 0, 0.03);
+    border: 1px solid #fce7f3;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
