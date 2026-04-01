@@ -4,6 +4,11 @@ import { supabase } from "@/lib/supabase";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+  if (!supabase) {
+    console.error("Supabase client is not initialized (missing env vars).");
+    return NextResponse.json({ ids: [] });
+  }
+
   try {
     const { data, error } = await supabase
       .from("videos")

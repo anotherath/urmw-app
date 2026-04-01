@@ -16,6 +16,16 @@ function formatDuration(seconds: number) {
 }
 
 export default async function Home() {
+  if (!supabase) {
+    return (
+      <main className="flex-1 p-6">
+        <div className="p-4 text-center text-red-500 bg-red-50 dark:bg-red-900/20 rounded-[24px]">
+          Configuration Error: Supabase environment variables are missing.
+        </div>
+      </main>
+    );
+  }
+
   // Fetch songs from Supabase
   const { data: songs, error } = await supabase
     .from("videos")
