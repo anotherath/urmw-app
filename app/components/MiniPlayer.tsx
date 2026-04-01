@@ -119,7 +119,7 @@ export default function MiniPlayer() {
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
     setIsDragging(true);
     if ("touches" in e) {
-      updateProgress((e as TouchEvent).touches[0].clientX);
+      updateProgress((e as React.TouchEvent).touches[0].clientX);
     } else {
       updateProgress((e as React.MouseEvent).clientX);
     }
