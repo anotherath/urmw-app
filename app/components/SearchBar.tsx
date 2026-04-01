@@ -17,18 +17,18 @@ export default function SearchBar({ placeholder = "Search for music...", classNa
       <div 
         className={cn(
           "flex items-center glass rounded-full px-4 py-3 transition-all duration-300",
-          isFocused ? "shadow-md ring-2 ring-primary/30 bg-white" : "shadow-sm hover:shadow"
+          isFocused ? "shadow-md ring-2 ring-primary/40 bg-(--card-bg)" : "shadow-sm hover:shadow"
         )}
       >
-        <Search size={20} className={cn("transition-colors", isFocused ? "text-primary" : "text-slate-400")} />
+        <Search size={20} className={cn("transition-colors", isFocused ? "text-primary" : "text-slate-400 dark:text-gray-500")} />
         <input 
           type="text"
           placeholder={placeholder}
-          className="flex-1 bg-transparent border-none outline-none px-3 text-sm text-slate-700 placeholder:text-slate-400 font-medium"
+          className="flex-1 bg-transparent border-none outline-none px-3 text-sm text-(--text-main) placeholder:text-slate-400 dark:placeholder:text-gray-500 font-medium"
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
         />
-        <button className="text-slate-400 hover:text-primary transition-colors">
+        <button className="text-slate-400 dark:text-gray-500 hover:text-primary transition-colors">
           <Mic size={20} />
         </button>
       </div>

@@ -1,23 +1,55 @@
 "use client";
 
-import { User } from "lucide-react";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import { Moon, Sun } from "lucide-react";
 
 export default function Header() {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const theme = localStorage.getItem("theme");
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      setIsDark(true);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    if (isDark) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      setIsDark(false);
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      setIsDark(true);
+    }
+  };
+
   return (
-    <header className="sticky top-0 z-50 h-16 px-6 bg-slate-50/95 backdrop-blur-lg  flex items-center justify-between">
-      <Link href="/" className="flex items-center">
-        <h1 className="text-2xl font-black tracking-tighter text-gray-900">
+    <header className="sticky top-0 z-50 h-16 px-6 bg-(--bg-header) backdrop-blur-lg border-(--card-border) flex items-center justify-between transition-colors duration-500">
+      <Link href="/">
+        <h1 className="text-2xl font-black tracking-tighter text-primary">
           URMW
         </h1>
       </Link>
 
-      <Link
-        href="/library"
-        className="p-2 text-gray-700 hover:text-gray-900 transition-colors"
+      <button
+        onClick={toggleTheme}
+        className={`w-10 h-10 rounded-full transition-all duration-500 hover:scale-110 active:scale-95 flex items-center justify-center border-none outline-none ${
+          isDark 
+            ? "bg-slate-800 text-yellow-400" 
+            : "bg-slate-100 text-primary"
+        }`}
+        aria-label="Toggle Theme"
       >
-        <User size={24} strokeWidth={2.25} />
-      </Link>
+        {isDark ? (
+          <Sun className="w-5 h-5 fill-yellow-400/20 transition-all duration-500" />
+        ) : (
+          <Moon className="w-5 h-5 fill-primary/10 transition-all duration-500" />
+        )}
+      </button>
     </header>
   );
 }

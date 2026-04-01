@@ -1,47 +1,67 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-primary: #FF6B9E; /* Pink */
-  --color-primary-dark: #E65A8D;
-  --color-secondary: #FFB3D1; 
-  --color-background-start: #F1F5F9; /* Slate 100 */
-  --color-background-mid: #E2E8F0; /* Slate 200 */
-  --color-background-end: #CBD5E1; /* Slate 300 */
-  
+  --color-primary: #ff6b9e; /* Pink */
+  --color-primary-dark: #e65a8d;
+  --color-secondary: #ffb3d1;
+  --color-background-start: #f1f5f9; /* Slate 100 */
+  --color-background-mid: #e2e8f0; /* Slate 200 */
+  --color-background-end: #cbd5e1; /* Slate 300 */
+
   --font-sans: var(--font-inter);
 }
 
 @layer base {
+  :root {
+    --bg-main: #f8fafc; /* slate-50 */
+    --bg-header: rgba(248, 250, 252, 0.95); /* slate-50/95 */
+    --text-main: #0f172a; /* slate-900 */
+    --card-bg: #ffffff;
+    --card-border: #f1f5f9;
+  }
+
+  .dark {
+    --bg-main: #0f172a; /* slate-900 */
+    --bg-header: rgba(15, 23, 42, 0.95); /* slate-900/95 */
+    --text-main: #f8fafc; /* slate-50 */
+    --card-bg: #1e293b; /* slate-800 */
+    --card-border: #334155;
+  }
+
   body {
-    background-color: #ffffff;
-    color: #111827;
+    background-color: var(--bg-main);
+    color: var(--text-main);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
 }
 
 @layer utilities {
-
   .glass {
-    background: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: var(--bg-header);
+    border: 1px solid var(--card-border);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
   }
 
   .glass-card {
-    background: #ffffff;
-    border: 1px solid #fce7f3;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
   }
 
   .soft-shadow {
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    box-shadow:
+      0 10px 25px -5px rgba(0, 0, 0, 0.05),
+      0 8px 10px -6px rgba(0, 0, 0, 0.01);
   }
-  
+
   .neumorph {
-    background: #ffffff;
-    box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.8), 5px 5px 15px rgba(0, 0, 0, 0.03);
-    border: 1px solid #fce7f3;
+    background: var(--card-bg);
+    box-shadow:
+      -5px -5px 15px rgba(255, 255, 255, 0.8),
+      5px 5px 15px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--card-border);
   }
 
   .hide-scrollbar {

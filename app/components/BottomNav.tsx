@@ -15,7 +15,7 @@ export default function BottomNav() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md z-50 bg-white shadow-[0_-10px_40px_rgba(0,0,0,0.04)]">
+    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md z-50 bg-(--bg-header) backdrop-blur-lg border-t border-(--card-border) shadow-[0_-10px_40px_rgba(0,0,0,0.04)]">
       <nav className="flex justify-between items-center h-16 px-8 pb-safe">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
@@ -27,7 +27,7 @@ export default function BottomNav() {
               href={item.href}
               className={cn(
                 "flex flex-col items-center justify-center h-full pt-2 transition-colors duration-200 w-16",
-                isActive ? "text-primary" : "text-gray-400 hover:text-gray-600",
+                isActive ? "text-primary" : "text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300",
               )}
             >
               <Icon

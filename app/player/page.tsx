@@ -6,11 +6,9 @@ import {
   Pause,
   SkipForward,
   SkipBack,
-  Heart,
   Shuffle,
   Repeat,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 export default function PlayerPage() {
   const [isPlaying, setIsPlaying] = useState(true);
@@ -54,11 +52,11 @@ export default function PlayerPage() {
                 NOW PLAYING
               </span>
 
-              <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 tracking-tight leading-snug mb-1 line-clamp-2">
+              <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-white tracking-tight leading-snug mb-1 line-clamp-2">
                 {song.title}
               </h2>
 
-              <p className="text-base text-gray-500 font-medium line-clamp-1">
+              <p className="text-base text-gray-500 dark:text-gray-400 font-medium line-clamp-1">
                 {song.artist}
               </p>
             </div>

@@ -29,7 +29,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} font-sans h-full antialiased`}
     >
-      <body className="min-h-full bg-slate-50 overscroll-none text-gray-900">
+      <body className="min-h-full overscroll-none">
         <Header />
         <div className="pb-42">{children}</div>
 

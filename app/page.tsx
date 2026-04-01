@@ -76,33 +76,19 @@ export default function Home() {
   return (
     <main className="flex-1 overflow-y-auto px-4 pt-6 pb-6 hide-scrollbar relative">
       <div className="mb-8 pl-1">
-        <h1 className="text-[28px] font-black text-gray-900 tracking-tight mb-1">
+        <h1 className="text-[28px] font-black text-(--text-main) tracking-tight mb-1">
           Good Morning
         </h1>
-        <p className="text-sm font-medium text-gray-500">
+        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
           Find your favorite music
         </p>
       </div>
 
       <SearchBar className="mb-8" />
 
-      <section className="mb-8">
-        <h2 className="text-lg font-bold text-gray-900 mb-4 px-1">
-          Recently Played
-        </h2>
-        <div className="space-y-3">
-          {recentlyPlayed.map((song) => (
-            <MusicCard key={song.id} {...song} isRecentlyPlayed />
-          ))}
-        </div>
-      </section>
-
       <section className="mb-6">
         <div className="flex justify-between items-center mb-4 px-1">
-          <h2 className="text-lg font-bold text-gray-900">Your Music</h2>
-          <button className="text-[13px] font-semibold text-primary hover:text-primary-dark transition-colors">
-            See all
-          </button>
+          <h2 className="text-lg font-bold text-(--text-main)">Your Music</h2>
         </div>
         <div className="space-y-3">
           {yourMusic.map((song) => (
@@ -110,8 +96,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      {/* <FloatingActionButton /> */}
     </main>
   );
 }
