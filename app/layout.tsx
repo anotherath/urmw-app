@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./components/Header";
 import MiniPlayer from "./components/MiniPlayer";
 import BottomNav from "./components/BottomNav";
+import AudioProvider from "./components/AudioProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -30,6 +31,7 @@ export default function RootLayout({
       className={`${inter.variable} font-sans h-full antialiased`}
     >
       <body className="min-h-full overscroll-none">
+        <AudioProvider />
         <Header />
         <div className="pb-42">{children}</div>
 

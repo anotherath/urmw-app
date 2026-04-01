@@ -1,76 +1,114 @@
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import SearchBar from "../components/SearchBar";
-import MusicCard from "../components/MusicCard";
+import SearchResultCard from "../components/SearchResultCard";
+import { Loader2, SearchX } from "lucide-react";
+
+interface SearchResult {
+  id: string;
+  title: string;
+  artist: string;
+  duration: number;
+}
 
 export default function SearchPage() {
-  const recentlyPlayed = [
-    {
-      id: 1,
-      title: "Peaches",
-      artist: "Justin Bieber",
-      duration: "3:18",
-      cover:
-        "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=400&h=400&auto=format&fit=crop",
-    },
-    {
-      id: 2,
-      title: "As It Was",
-      artist: "Harry Styles",
-      duration: "2:47",
-      cover:
-        "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=400&h=400&auto=format&fit=crop",
-    },
-    {
-      id: 3,
-      title: "Levitating",
-      artist: "Dua Lipa",
-      duration: "3:23",
-      cover:
-        "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=400&h=400&auto=format&fit=crop",
-    },
-  ];
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const query = searchParams.get("q") || "";
 
-  const yourMusic = [
-    {
-      id: 4,
-      title: "Blinding Lights",
-      artist: "The Weeknd",
-      duration: "3:20",
-      cover:
-        "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=400&h=400&auto=format&fit=crop",
-    },
-    {
-      id: 5,
-      title: "Watermelon Sugar",
-      artist: "Harry Styles",
-      duration: "2:54",
-      cover:
-        "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=400&h=400&auto=format&fit=crop",
-    },
-    {
-      id: 6,
-      title: "Say So",
-      artist: "Doja Cat",
-      duration: "3:57",
-      cover:
-        "https://images.unsplash.com/photo-1496293455970-f8581aae0e3c?q=80&w=400&h=400&auto=format&fit=crop",
-    },
-    {
-      id: 7,
-      title: "Good 4 U",
-      artist: "Olivia Rodrigo",
-      duration: "2:58",
-      cover:
-        "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=400&h=400&auto=format&fit=crop",
-    },
-    {
-      id: 8,
-      title: "Don't Start Now",
-      artist: "Dua Lipa",
-      duration: "3:03",
-      cover:
-        "https://images.unsplash.com/photo-1420161907993-e29922204c6b?q=80&w=400&h=400&auto=format&fit=crop",
-    },
-  ];
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [hasSearched, setHasSearched] = useState(false);
+  const [downloadingIds, setDownloadingIds] = useState<Set<string>>(new Set());
+  const [downloadedIds, setDownloadedIds] = useState<Set<string>>(new Set());
+
+  // Fetch already-downloaded video IDs from Supabase on mount
+  useEffect(() => {
+    async function fetchDownloaded() {
+      try {
+        const res = await fetch("/api/downloaded");
+        const json = await res.json();
+        if (json.ids && json.ids.length > 0) {
+          setDownloadedIds(new Set(json.ids));
+        }
+      } catch {
+        // Silently fail – worst case, download icons show for everything
+      }
+    }
+    fetchDownloaded();
+  }, []);
+
+  const doSearch = useCallback(async (q: string) => {
+    if (!q.trim()) return;
+
+    setIsLoading(true);
+    setError(null);
+    setHasSearched(true);
+
+    try {
+      const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
+      const json = await res.json();
+
+      if (json.error) {
+        setError(json.error);
+        setResults([]);
+      } else {
+        setResults(json.data || []);
+      }
+    } catch {
+      setError("Failed to search. Please try again.");
+      setResults([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (query) {
+      doSearch(query);
+    }
+  }, [query, doSearch]);
+
+  const handleDownload = async (videoId: string) => {
+    if (downloadingIds.has(videoId) || downloadedIds.has(videoId)) return;
+
+    setDownloadingIds((prev) => new Set(prev).add(videoId));
+
+    try {
+      const res = await fetch(
+        `/api/process?video_id=${encodeURIComponent(videoId)}`,
+      );
+      const json = await res.json();
+
+      if (res.ok) {
+        setDownloadedIds((prev) => new Set(prev).add(videoId));
+        // Revalidate server data so home page shows the new song
+        router.refresh();
+      } else {
+        alert(json.detail || json.error || "Download failed");
+      }
+    } catch {
+      alert("Download failed. Please try again.");
+    } finally {
+      setDownloadingIds((prev) => {
+        const next = new Set(prev);
+        next.delete(videoId);
+        return next;
+      });
+    }
+  };
+
+  const formatDuration = (seconds: number) => {
+    if (!seconds) return "0:00";
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60)
+      .toString()
+      .padStart(2, "0");
+    return `${m}:${s}`;
+  };
 
   return (
     <main className="flex-1 overflow-y-auto px-4 pt-6 pb-6 hide-scrollbar relative">
@@ -79,21 +117,78 @@ export default function SearchPage() {
           Search
         </h1>
         <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-          Find your favorite music from youtube
+          Find your favorite music from YouTube
         </p>
       </div>
 
-      <SearchBar className="mb-8" />
+      <SearchBar className="mb-8" defaultValue={query} />
 
       <section className="mb-6">
-        <div className="flex justify-between items-center mb-4 px-1">
-          <h2 className="text-lg font-bold text-(--text-main)">Search Results</h2>
-        </div>
-        <div className="space-y-3">
-          {yourMusic.map((song) => (
-            <MusicCard key={song.id} {...song} />
-          ))}
-        </div>
+        {/* Loading State */}
+        {isLoading && (
+          <div className="flex flex-col items-center justify-center py-16 gap-3">
+            <Loader2 size={32} className="animate-spin text-primary" />
+            <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+              Searching for &ldquo;{query}&rdquo;...
+            </p>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && !isLoading && (
+          <div className="p-4 text-center text-red-500 bg-red-50 dark:bg-red-900/20 rounded-[24px]">
+            {error}
+          </div>
+        )}
+
+        {/* Results */}
+        {!isLoading && !error && results.length > 0 && (
+          <>
+            <div className="flex justify-between items-center mb-4 px-1">
+              <h2 className="text-lg font-bold text-(--text-main)">
+                Search Results
+              </h2>
+              <span className="text-xs text-gray-400 dark:text-gray-500 font-medium">
+                {results.length} results
+              </span>
+            </div>
+            <div className="space-y-3">
+              {results.map((result) => (
+                <SearchResultCard
+                  key={result.id}
+                  videoId={result.id}
+                  title={result.title}
+                  artist={result.artist}
+                  duration={formatDuration(result.duration)}
+                  cover={`https://img.youtube.com/vi/${result.id}/mqdefault.jpg`}
+                  isDownloading={downloadingIds.has(result.id)}
+                  isDownloaded={downloadedIds.has(result.id)}
+                  onDownload={() => handleDownload(result.id)}
+                />
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* Empty State */}
+        {!isLoading && !error && hasSearched && results.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-16 gap-3">
+            <SearchX size={40} className="text-gray-300 dark:text-gray-600" />
+            <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+              No results found for &ldquo;{query}&rdquo;
+            </p>
+          </div>
+        )}
+
+        {/* Initial State */}
+        {!isLoading && !hasSearched && (
+          <div className="flex flex-col items-center justify-center py-16 gap-3">
+            <SearchX size={40} className="text-gray-300 dark:text-gray-600" />
+            <p className="text-sm text-gray-500 dark:text-gray-400 font-medium text-center">
+              Search for a song to get started
+            </p>
+          </div>
+        )}
       </section>
     </main>
   );
