@@ -163,6 +163,7 @@ export default function MiniPlayer() {
         preload="auto"
         crossOrigin="anonymous"
         playsInline
+        loop
       />
 
       {/* Chỉ hiển thị MiniPlayer UI nếu không phải đang ở trang /player */}
