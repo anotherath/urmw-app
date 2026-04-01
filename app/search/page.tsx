@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import SearchBar from "../components/SearchBar";
 import SearchResultCard from "../components/SearchResultCard";
@@ -13,7 +13,7 @@ interface SearchResult {
   duration: number;
 }
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const query = searchParams.get("q") || "";
@@ -191,5 +191,30 @@ export default function SearchPage() {
         )}
       </section>
     </main>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+        <main className="flex-1 overflow-y-auto px-4 pt-6 pb-6 hide-scrollbar relative">
+          <div className="mb-8 pl-1">
+            <h1 className="text-[28px] font-black text-(--text-main) tracking-tight mb-1 font-sans">
+              Search
+            </h1>
+            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+              Find your favorite music from YouTube
+            </p>
+          </div>
+          <div className="flex flex-col items-center justify-center py-16 gap-3">
+            <Loader2 size={32} className="animate-spin text-primary" />
+            <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+              Loading search...
+            </p>
+          </div>
+        </main>
+    }>
+      <SearchContent />
+    </Suspense>
   );
 }
