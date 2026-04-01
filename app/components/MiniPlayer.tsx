@@ -19,13 +19,14 @@ export default function MiniPlayer() {
 
   // Dữ liệu bài hát (tạm thời hardcode)
   const song = {
-    title: "Forever and Ever and Always (The Softer Version)",
-    artist: "Ryan Mack",
-    cover: "https://img.youtube.com/vi/bRBzj1Sqvk4/maxresdefault.jpg",
+    title:
+      "Một Điều Mà Anh Rất Ngại Nói Ra (A Thing That I Was Afraid To Say) - Hai Sam",
+    artist: "Hai Sam",
+    cover: "https://img.youtube.com/vi/dpxfxxhZ-uQ/maxresdefault.jpg",
   };
 
   const src =
-    "https://urmw-stream.anotheralltimehigh.workers.dev/?id=CQACAgUAAxkDAAMsacf6eYYM4Q5Def9fVGXfCLkIXPAAAsEgAAKZKEBWjxx7LOP9Jsc6BA";
+    "https://urmw-stream.anotheralltimehigh.workers.dev/?id=CQACAgUAAxkDAANCacz8t4NMPvbmYDJobxD4QPIO5T8AArsjAALl6WlWV0xLynDNwXA6BA";
 
   // format time
   const formatTime = (t: number) => {
