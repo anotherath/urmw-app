@@ -90,7 +90,7 @@ export default function PlayerPage() {
 
   if (!currentSong) {
     return (
-      <main className="flex flex-col items-center justify-center flex-1 text-gray-400 dark:text-gray-500">
+      <main className="flex flex-col items-center justify-center flex-1 text-gray-400 dark:text-gray-500 lg:ml-0">
         <p className="text-lg font-medium">No song selected</p>
       </main>
     );
@@ -99,9 +99,9 @@ export default function PlayerPage() {
   const cover = `https://img.youtube.com/vi/${currentSong.videoId}/maxresdefault.jpg`;
 
   return (
-    <main className="flex flex-col">
-      <div className="flex-1 flex flex-col px-6 gap-12">
-        {/* Album Art */}
+    <main className="flex flex-col lg:flex-row lg:items-center lg:justify-center lg:gap-16 lg:max-w-6xl lg:mx-auto lg:px-8 lg:py-8 lg:flex-1">
+      {/* Album Art */}
+      <div className="flex-1 flex flex-col px-6 gap-12 lg:flex-none lg:px-0 lg:w-[420px] xl:w-[480px]">
         <div className="w-full aspect-square rounded-3xl overflow-hidden shadow-2xl">
           <img
             src={cover}
@@ -109,21 +109,23 @@ export default function PlayerPage() {
             className="w-full h-full object-cover"
           />
         </div>
+      </div>
 
-        {/* Song Info + Progress + Controls */}
+      {/* Song Info + Progress + Controls */}
+      <div className="flex-1 flex flex-col px-6 gap-12 lg:flex-none lg:px-0 lg:max-w-lg lg:justify-center">
         <div className="space-y-6">
           {/* Song Info */}
           <div className="flex justify-between items-start">
             <div className="flex-1">
-              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary/80 mb-2 block">
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary/80 mb-2 block lg:text-xs">
                 NOW PLAYING
               </span>
 
-              <h2 className="text-2xl sm:text-3xl font-black tracking-tight leading-tight mb-2 line-clamp-2">
+              <h2 className="text-2xl sm:text-3xl font-black tracking-tight leading-tight mb-2 line-clamp-2 lg:text-4xl">
                 {currentSong.title}
               </h2>
 
-              <p className="text-base text-slate-400 font-medium line-clamp-1">
+              <p className="text-base text-slate-400 font-medium line-clamp-1 lg:text-lg">
                 {currentSong.artist}
               </p>
             </div>
@@ -133,7 +135,7 @@ export default function PlayerPage() {
           <div>
             <div
               ref={progressRef}
-              className="h-2 w-full bg-slate-200 rounded-full overflow-hidden cursor-pointer group/progress relative backdrop-blur-sm"
+              className="h-2 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden cursor-pointer group/progress relative backdrop-blur-sm"
               onClick={handleProgressClick}
               onMouseDown={handleDragStart}
               onTouchStart={handleDragStart}
@@ -152,14 +154,14 @@ export default function PlayerPage() {
               />
             </div>
 
-            <div className="flex justify-between mt-3 text-[12px] font-bold text-slate-400 dark:text-slate-500 tabular-nums">
+            <div className="flex justify-between mt-3 text-[12px] font-bold text-slate-400 dark:text-slate-500 tabular-nums lg:text-sm">
               <span>{formatTime(currentTime)}</span>
               <span>{formatTime(audioDuration)}</span>
             </div>
           </div>
 
           {/* Controls */}
-          <div className="flex items-center justify-between px-4">
+          <div className="flex items-center justify-between px-4 lg:justify-center lg:gap-10 lg:px-0">
             {/* Shuffle – disabled for now */}
             <button
               className="text-gray-300 dark:text-gray-600 p-2 cursor-not-allowed"

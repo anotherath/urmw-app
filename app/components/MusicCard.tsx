@@ -37,11 +37,11 @@ export default function MusicCard({
         "bg-(--card-bg) border flex items-center p-3 rounded-[24px] gap-4 shadow-[0_2px_15px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-500 cursor-pointer group active:scale-[0.98]",
         isCurrentSong
           ? "border-primary/40 bg-primary/5 dark:bg-primary/10"
-          : "border-(--card-border)"
+          : "border-(--card-border)",
       )}
     >
       {/* Cover & Play overlay */}
-      <div className="relative w-16 h-16 rounded-[16px] overflow-hidden shadow-sm shrink-0 bg-gray-50 dark:bg-slate-700">
+      <div className="relative w-16 h-16 rounded-[16px] overflow-hidden shadow-sm shrink-0 bg-gray-50 dark:bg-slate-700 lg:w-20 lg:h-20">
         <img
           src={cover}
           alt={title}
@@ -50,13 +50,15 @@ export default function MusicCard({
         <div
           className={cn(
             "absolute inset-0 bg-black/10 flex items-center justify-center transition-opacity",
-            isCurrentSong && isPlaying ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+            isCurrentSong && isPlaying
+              ? "opacity-100"
+              : "opacity-0 group-hover:opacity-100",
           )}
         >
           {isCurrentSong && isPlaying ? (
-            <Pause size={20} className="text-white fill-white" />
+            <Pause size={20} className="text-white fill-white lg:size-6" />
           ) : (
-            <Play size={20} className="text-white fill-white ml-1" />
+            <Play size={20} className="text-white fill-white ml-1 lg:size-6" />
           )}
         </div>
       </div>
@@ -65,13 +67,13 @@ export default function MusicCard({
       <div className="flex-1 min-w-0 pr-2">
         <h3
           className={cn(
-            "font-semibold text-[15px] truncate mb-0.5",
-            isCurrentSong && "text-primary"
+            "font-semibold text-[15px] truncate mb-0.5 lg:text-base",
+            isCurrentSong && "text-primary",
           )}
         >
           {title}
         </h3>
-        <p className="text-[13px] text-gray-400 dark:text-gray-500 truncate font-medium">
+        <p className="text-[13px] text-gray-400 dark:text-gray-500 truncate font-medium lg:text-sm">
           {artist}
         </p>
       </div>
@@ -80,10 +82,10 @@ export default function MusicCard({
       <div className="shrink-0 px-2">
         <span
           className={cn(
-            "text-[13px] font-medium transition-colors",
+            "text-[13px] font-medium transition-colors lg:text-sm",
             isCurrentSong
               ? "text-primary"
-              : "text-gray-400 dark:text-gray-500 group-hover:text-(--text-main)"
+              : "text-gray-400 dark:text-gray-500 group-hover:text-(--text-main)",
           )}
         >
           {duration}

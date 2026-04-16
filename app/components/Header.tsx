@@ -9,8 +9,11 @@ export default function Header() {
 
   useEffect(() => {
     const theme = localStorage.getItem("theme");
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
+    if (theme === "light") {
+      document.documentElement.classList.remove("dark");
+      setIsDark(false);
+    } else {
+      if (!theme) localStorage.setItem("theme", "dark");
       setIsDark(true);
     }
   }, []);
@@ -28,7 +31,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 h-16 px-6 bg-(--bg-header) backdrop-blur-lg border-(--card-border) flex items-center justify-between transition-colors duration-500">
+    <header className="sticky top-0 z-50 h-16 px-6 bg-(--bg-header) backdrop-blur-lg border-(--card-border) flex items-center justify-between transition-colors duration-500 lg:hidden">
       <Link href="/">
         <h1 className="text-2xl font-black tracking-tighter text-primary">
           URMW

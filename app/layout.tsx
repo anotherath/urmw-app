@@ -28,12 +28,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} font-sans h-full antialiased`}
+      className={`${inter.variable} font-sans h-full antialiased dark`}
     >
       <body className="min-h-full overscroll-none">
         <AudioProvider />
         <Header />
-        <div className="pb-42">{children}</div>
+        <div className="pb-42 lg:pb-24 lg:ml-64">{children}</div>
 
         <MiniPlayer />
         <BottomNav />

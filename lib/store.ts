@@ -66,11 +66,16 @@ export const useMusicStore = create<MusicState>((set, get) => ({
     ) {
       return;
     }
+    const currentSong = songs[0] || null;
     set({
       playlist: songs,
       currentIndex: 0,
-      currentSong: songs[0] || null,
+      currentSong,
     });
+    if (state.audioRef && currentSong) {
+      state.audioRef.src = state.getStreamUrl(currentSong);
+      state.audioRef.load();
+    }
   },
 
   // Play a specific song by index — always auto-plays
@@ -91,9 +96,12 @@ export const useMusicStore = create<MusicState>((set, get) => ({
     });
 
     if (audioRef) {
+      audioRef.pause();
       audioRef.src = url;
       audioRef.load();
-      audioRef.play().catch(console.error);
+      audioRef.play().catch((err) => {
+        if (err?.name !== "AbortError") console.error(err);
+      });
     }
   },
 
@@ -108,13 +116,22 @@ export const useMusicStore = create<MusicState>((set, get) => ({
 
   // Toggle play/pause
   togglePlay: () => {
-    const { audioRef, isPlaying } = get();
-    if (!audioRef) return;
+    const { audioRef, isPlaying, currentSong, getStreamUrl } = get();
+    if (!audioRef || !currentSong) return;
 
     if (isPlaying) {
       audioRef.pause();
     } else {
-      audioRef.play().catch(console.error);
+      const expectedSrc = getStreamUrl(currentSong);
+      if (!audioRef.src || !audioRef.src.includes(currentSong.fileId)) {
+        audioRef.src = expectedSrc;
+        audioRef.load();
+        set({ isPlaying: true });
+      } else {
+        audioRef.play().catch((err) => {
+          if (err?.name !== "AbortError") console.error(err);
+        });
+      }
     }
     // isPlaying is synced via audio events in AudioProvider
   },
@@ -192,7 +209,16 @@ export const useMusicStore = create<MusicState>((set, get) => ({
   },
 
   // Set the audio element ref
-  setAudioRef: (ref) => set({ audioRef: ref }),
+  setAudioRef: (ref) => {
+    set({ audioRef: ref });
+    if (ref && !ref.src) {
+      const { currentSong, getStreamUrl } = get();
+      if (currentSong) {
+        ref.src = getStreamUrl(currentSong);
+        ref.load();
+      }
+    }
+  },
 
   // Get stream URL for a song (defaults to current)
   getStreamUrl: (song) => {

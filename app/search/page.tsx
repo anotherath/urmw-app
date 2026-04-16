@@ -111,17 +111,17 @@ function SearchContent() {
   };
 
   return (
-    <main className="flex-1 overflow-y-auto px-4 pt-6 pb-6 hide-scrollbar relative">
+    <main className="flex-1 overflow-y-auto px-4 pt-6 pb-6 hide-scrollbar relative lg:px-8 lg:pt-8 lg:pb-8">
       <div className="mb-8 pl-1">
-        <h1 className="text-[28px] font-black text-(--text-main) tracking-tight mb-1">
+        <h1 className="text-[28px] font-black text-(--text-main) tracking-tight mb-1 lg:text-4xl">
           Search
         </h1>
-        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+        <p className="text-sm font-medium text-gray-500 dark:text-gray-400 lg:text-base">
           Find your favorite music from YouTube
         </p>
       </div>
 
-      <SearchBar className="mb-8" defaultValue={query} />
+      <SearchBar className="mb-8 lg:max-w-xl" defaultValue={query} />
 
       <section className="mb-6">
         {/* Loading State */}
@@ -145,14 +145,14 @@ function SearchContent() {
         {!isLoading && !error && results.length > 0 && (
           <>
             <div className="flex justify-between items-center mb-4 px-1">
-              <h2 className="text-lg font-bold text-(--text-main)">
+              <h2 className="text-lg font-bold text-(--text-main) lg:text-xl">
                 Search Results
               </h2>
               <span className="text-xs text-gray-400 dark:text-gray-500 font-medium">
                 {results.length} results
               </span>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-3 lg:grid lg:grid-cols-2 xl:grid-cols-3 lg:gap-4 lg:space-y-0">
               {results.map((result) => (
                 <SearchResultCard
                   key={result.id}
@@ -197,12 +197,12 @@ function SearchContent() {
 export default function SearchPage() {
   return (
     <Suspense fallback={
-        <main className="flex-1 overflow-y-auto px-4 pt-6 pb-6 hide-scrollbar relative">
+        <main className="flex-1 overflow-y-auto px-4 pt-6 pb-6 hide-scrollbar relative lg:px-8 lg:pt-8 lg:pb-8">
           <div className="mb-8 pl-1">
-            <h1 className="text-[28px] font-black text-(--text-main) tracking-tight mb-1 font-sans">
+            <h1 className="text-[28px] font-black text-(--text-main) tracking-tight mb-1 font-sans lg:text-4xl">
               Search
             </h1>
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+            <p className="text-sm font-medium text-gray-500 dark:text-gray-400 lg:text-base">
               Find your favorite music from YouTube
             </p>
           </div>

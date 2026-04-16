@@ -96,7 +96,9 @@ export default function AudioProvider() {
     const onCanPlay = () => {
       const { isPlaying } = useMusicStore.getState();
       if (isPlaying) {
-        audio.play().catch(console.error);
+        audio.play().catch((err) => {
+          if (err?.name !== "AbortError") console.error(err);
+        });
       }
     };
 
