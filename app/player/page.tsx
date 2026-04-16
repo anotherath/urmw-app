@@ -117,7 +117,7 @@ export default function PlayerPage() {
           {/* Song Info */}
           <div className="flex justify-between items-start">
             <div className="flex-1">
-              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary/80 mb-2 block lg:text-xs">
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-primary/80 mb-2 mt-4 block lg:mt-0 lg:text-xs">
                 NOW PLAYING
               </span>
 
