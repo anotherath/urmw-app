@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const STREAM_BASE = "https://urmw-stream.anotheralltimehigh.workers.dev";
+const STREAM_BASE = process.env.NEXT_PUBLIC_STREAM_BASE_URL || "";
 
 export interface Song {
   videoId: string;

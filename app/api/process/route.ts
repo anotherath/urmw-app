@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const API_BASE = "https://ytm-to-tele-production.up.railway.app";
+const API_BASE = process.env.API_BASE_URL || "";
 
 export async function GET(request: NextRequest) {
   const videoId = request.nextUrl.searchParams.get("video_id");
